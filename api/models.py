@@ -11,3 +11,9 @@ class Ticker_Symbol(models.Model):
     volume = models.IntegerField(null=False, blank=False)
     instrument = models.CharField(max_length=50, null=False, blank=False)
 
+    class Meta:
+        ordering = ('instrument', 'datetime')
+
+    def save(self, *args, **kwargs):
+        self.instrument = self.instrument.upper()
+        super(Ticker_Symbol, self).save(*args, **kwargs)
