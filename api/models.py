@@ -13,7 +13,3 @@ class Ticker_Symbol(models.Model):
 
     class Meta:
         ordering = ('instrument', 'datetime')
-
-    def save(self, *args, **kwargs):
-        self.instrument = self.instrument.upper()
-        super(Ticker_Symbol, self).save(*args, **kwargs)

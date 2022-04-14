@@ -11,4 +11,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('tickersymbol/option', list_option),
     path('tickersymbol/option/<str:pk>', list_specific),
+    # path('upload-csv', UploadTickerSymbol.as_view()),
 ]
