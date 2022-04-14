@@ -22,7 +22,7 @@ export const Table = (data) => {
                         {data.data.map(x => <Row key={x.id} row={x}/>)}
                     </tbody>
                 </table>
-            : "No records."}
+            : <p>No records.</p>}
         </>
     );
 }

@@ -1,9 +1,11 @@
 import './App.css';
 import React, { Component, useState, useEffect } from "react"
+
 import Table from './components/Table';
-import Row from './components/Row';
+import FileReader from './components/FileReader';
 
 function App() {
+  const [isUpdated, setIsUpdated] = useState(0);
   const [data, setData] = useState([]);
   const [option, setOption] = useState([]);
   const [selectedOption, setSelectedOption] = useState('');
@@ -20,7 +22,7 @@ function App() {
       }).catch(error => console.error(error));
     }
     getOption();
-  }, [])
+  }, [isUpdated])
 
   // set selected option
   useEffect(() => {
@@ -29,6 +31,7 @@ function App() {
     }  
   }, [option])
 
+  // get all
   const getAll = async() => {
     console.log("");
     await fetch(`http://127.0.0.1:8000/api/tickersymbol`, {
@@ -38,9 +41,9 @@ function App() {
     .then(data => {
         setData(data);
     }).catch(error => console.error(error));
-    
   }
 
+  // get specific instrument
   const getSpecific = async(e) => {
     e.preventDefault();
     await fetch(`http://127.0.0.1:8000/api/tickersymbol/option/${selectedOption}`, {
@@ -52,27 +55,63 @@ function App() {
     }).catch(error => console.error(error));
   }
 
-  const handleSelect = (value) => {
-    setSelectedOption(value);
+  // upload file
+  const uploadData = async(data) => {
+    data.map(x => {
+      fetch(`http://127.0.0.1:8000/api/tickersymbol/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(x)
+      }).then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+    });
+    setIsUpdated(1-isUpdated);
   }
 
+  // import csv 
+  const updateData = (result) => {
+    var content = result.data;
+    console.log(content);
+    uploadData(content);
+  }
+
+  // handle option
+  const handleSelect = async(event) => {
+    event.preventDefault();
+    setSelectedOption(event.target.value);
+  }
+
+  // clear data
+  const clear = async(event) => {
+    event.preventDefault();
+    setData([]);
+  }
 
   return (
     <div className="App">
-      <div>
-        <button>Upload</button>
-        <form onSubmit={getSpecific}>
-          <select onChange={(e) => handleSelect(e.target.value)}>
-            {option.map(x => <option key={x} value={x}> {x} </option>)}
-          </select> 
-          <input 
-            type="submit" 
-            value="Retrieve data"
-          />
-        </form>
-        <button onClick={getAll}>Get all</button>
+      <div className='selectTab'>
+        <FileReader updateData={updateData}/>
+        <div className='getTab'>
+          <label>Display data</label>
+          <form onSubmit={getSpecific}>
+            <select onChange={handleSelect}>
+              {option.map(x => <option key={x} value={x}> {x} </option>)}
+            </select> 
+            <input 
+              type="submit" 
+              value="Retrieve data"
+            />
+          </form>
+          <button onClick={getAll}>Retrieve all</button>
+          <button onClick={clear}>Clear</button>
+        </div>
       </div>
-      <div>
+
+      <div className='displayTab'>
         <Table data={data}/>
       </div>
 

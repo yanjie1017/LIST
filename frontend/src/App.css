@@ -1,38 +1,73 @@
+:root {
+  --primary-color: white;
+  --light-color: rgb(64, 100, 245);
+  --dark-color: rgb(0, 27, 132);
+}
+
 .App {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 3fr;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.selectTab {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border: 1pt solid var(--light-color);
+  padding: 0 1rem;
 }
 
-.App-link {
-  color: #61dafb;
+.uploadTab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.5rem;
+  border: 1pt solid var(--dark-color);
+  border-radius: 5pt;
+  margin-bottom: 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.getTab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 2rem;
+  border: 1pt solid var(--dark-color);
+  border-radius: 5pt;
+}
+
+.displayTab {
+  align-items: center;
+  justify-content: center;
+}
+
+label {
+  color: var(--dark-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+button, input {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  border: 1pt solid var(--light-color);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.5rem 0.7rem;
+  margin: 1rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border 0.2s ease;
+}
+
+button:hover, input:hover {
+  color: var(--dark-color);
+  border: 1pt solid var(--dark-color);
 }
