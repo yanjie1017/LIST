@@ -56,27 +56,8 @@ function App() {
   }
 
   // upload file
-  const uploadData = async(data) => {
-    data.map(x => {
-      fetch(`http://127.0.0.1:8000/api/tickersymbol/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(x)
-      }).then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
-    });
+  const uploadFile = async(data) => {
     setIsUpdated(1-isUpdated);
-  }
-
-  // import csv 
-  const updateData = (result) => {
-    var content = result.data;
-    console.log(content);
-    uploadData(content);
   }
 
   // handle option
@@ -94,7 +75,7 @@ function App() {
   return (
     <div className="App">
       <div className='selectTab'>
-        <FileReader updateData={updateData}/>
+        <FileReader uploadFile={uploadFile}/>
         <div className='getTab'>
           <label>Display data</label>
           <form onSubmit={getSpecific}>
