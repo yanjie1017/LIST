@@ -76,16 +76,14 @@ function App() {
     <div className="App">
       <div className='selectTab'>
         <FileReader uploadFile={uploadFile}/>
+
         <div className='getTab'>
           <label>Display data</label>
           <form onSubmit={getSpecific}>
             <select onChange={handleSelect}>
               {option.map(x => <option key={x} value={x}> {x} </option>)}
             </select> 
-            <input 
-              type="submit" 
-              value="Retrieve data"
-            />
+            <input type="submit" value="Retrieve data"/>
           </form>
           <button onClick={getAll}>Retrieve all</button>
           <button onClick={clear}>Clear</button>

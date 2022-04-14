@@ -26,14 +26,12 @@ class FileReader extends React.Component {
         });
     };
 
-    // import csv 
     updateData = (result) => {
         var content = result.data;
         console.log(content);
         this.uploadData(content);
     }
 
-    // upload file
     uploadData = async(data) => {
         data.map(x => {
             fetch(`http://127.0.0.1:8000/api/tickersymbol/`, {
